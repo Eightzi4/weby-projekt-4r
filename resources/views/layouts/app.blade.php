@@ -14,7 +14,12 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts and Styles -->
+    {{-- SMAŽTE NEBO ZAKOMENTUJTE TENTO ŘÁDEK:
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    --}}
+
+    {{-- A MÍSTO NĚJ VLOŽTE TENTO: --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- AlpineJS pro interaktivitu -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

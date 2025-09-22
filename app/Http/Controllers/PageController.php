@@ -12,11 +12,28 @@ class PageController extends Controller
      */
     public function home()
     {
-        // Zde později přidáme logiku pro načtení článků z databáze
-        // $articles = Article::published()->top()->latest('date')->get();
-        // return view('pages.home', ['articles' => $articles]);
+        // Odkomentovali jsme následující dva řádky
+        $articles = Article::published()->top()->latest('date')->get();
+        return view('pages.home', ['articles' => $articles]);
 
-        return view('pages.home');
+        // Tento řádek smažeme, protože už je nadbytečný
+        // return view('pages.home');
+    }
+
+    /**
+     * Zobrazí detail konkrétního článku.
+     *
+     * @param  string  $link
+     * @return \Illuminate\View\View
+     */
+    public function show($link)
+    {
+        // Najdeme článek v databázi podle sloupce 'link'.
+        // firstOrFail() automaticky vrátí chybu 404, pokud článek nenajde.
+        $article = Article::where('link', $link)->firstOrFail();
+
+        // Předáme nalezený článek do nového pohledu
+        return view('pages.articles.show', compact('article'));
     }
 
     /**
