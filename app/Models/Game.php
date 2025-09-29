@@ -52,7 +52,7 @@ class Game extends Model
      */
     public function homeTeam(): BelongsTo
     {
-        return $this->belongsTo(Team::class, 'home_tm');
+        return $this->belongsTo(Team::class, 'home');
     }
 
     /**
@@ -60,6 +60,19 @@ class Game extends Model
      */
     public function awayTeam(): BelongsTo
     {
-        return $this->belongsTo(Team::class, 'away_tm');
+        return $this->belongsTo(Team::class, 'away');
+    }
+
+    /**
+     * Vytvoří "virtuální" vlastnost, která ověří, zda je datum zápasu platné.
+     * Můžeme ji volat v Blade jako $game->has_valid_date
+     *
+     * @return bool
+     */
+    public function getHasValidDateAttribute(): bool
+    {
+        // Pokud datum není NULL a jeho rok je větší než 0, považujeme ho za platné.
+        // Tím odfiltrujeme případy, kdy se "0000-00-00" převede na rok -1 nebo 0.
+        return $this->date && $this->date->year > 0;
     }
 }

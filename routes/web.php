@@ -16,8 +16,12 @@ use App\Http\Controllers\PageController;
 
 // Routy pro veřejné stránky
 Route::get('/', [PageController::class, 'home'])->name('home');
+
+Route::get('/clanek/{article}', [PageController::class, 'show'])->name('articles.show');
+
 Route::get('/sezony', [PageController::class, 'seasons'])->name('seasons.index');
+Route::get('/sezony/{season}', [PageController::class, 'seasonMatches'])->name('seasons.show');
+
+Route::get('/zapas/{game}', [PageController::class, 'gameDetails'])->name('games.show');
+
 Route::get('/tymy', [PageController::class, 'teams'])->name('teams.index');
-
-Route::get('/clanek/{link}', [PageController::class, 'show'])->name('articles.show');
-

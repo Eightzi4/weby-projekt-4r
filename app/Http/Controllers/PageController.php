@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article; // Přidáme později pro načtení článků
+use App\Models\Season;
+use App\Models\Game;
 
 class PageController extends Controller
 {
@@ -26,13 +28,8 @@ class PageController extends Controller
      * @param  string  $link
      * @return \Illuminate\View\View
      */
-    public function show($link)
+    public function show(Article $article)
     {
-        // Najdeme článek v databázi podle sloupce 'link'.
-        // firstOrFail() automaticky vrátí chybu 404, pokud článek nenajde.
-        $article = Article::where('link', $link)->firstOrFail();
-
-        // Předáme nalezený článek do nového pohledu
         return view('pages.articles.show', compact('article'));
     }
 
@@ -41,7 +38,39 @@ class PageController extends Controller
      */
     public function seasons()
     {
-        return view('pages.seasons');
+        // Načteme sezóny, seřadíme od nejnovější (podle sloupce 'start').
+        // Použijeme eager loading pro načtení všech souvisejících lig najednou.
+        // Aplikujeme stránkování po 25 záznamech.
+        $seasons = Season::with('leagues')
+                         ->latest('start')
+                         ->paginate(25);
+
+        return view('pages.seasons', compact('seasons'));
+    }
+
+    public function seasonMatches(Season $season)
+    {
+        // Načteme všechny zápasy, které patří do těchto LeagueSeason záznamů
+        // a seřadíme je podle kola a data
+        $games = Game::whereIn('id_league_season', $season)
+                     ->with(['homeTeam', 'awayTeam']) // Načteme rovnou i názvy týmů
+                     ->orderBy('round')
+                     ->orderBy('date')
+                     ->get();
+
+        // Seskupíme zápasy podle čísla kola
+        $gamesByRound = $games->groupBy('round');
+
+        return view('pages.seasons.show', compact('season', 'gamesByRound'));
+    }
+
+    public function gameDetails(Game $game)
+    {
+        // Laravel díky Route Model Binding automaticky načte zápas i s týmy,
+        // ale pro jistotu je můžeme načíst znovu explicitně.
+        $game->load(['homeTeam', 'awayTeam']);
+
+        return view('pages.games.show', compact('game'));
     }
 
     /**

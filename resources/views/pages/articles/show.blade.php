@@ -26,8 +26,20 @@
         </div>
 
     </div>
-@endsection
 
-@push('scripts')
-    {{-- Zde můžeme přidat specifické skripty, pokud by byly potřeba --}}
-@endpush
+    {{-- ======================================================== --}}
+    {{-- ==== ZDE JE PŘIDANÝ KÓD PRO OPRAVU RESPONZIVNÍCH VIDEÍ ==== --}}
+    {{-- ======================================================== --}}
+    <style>
+        /* Zaměříme se na všechny iframe prvky, které jsou uvnitř kontejneru s třídou .prose */
+        .prose iframe {
+            width: 100%;            /* iframe bude vždy na 100% šířky svého rodiče */
+            aspect-ratio: 16 / 9;   /* Udrží poměr stran 16:9 (standard pro YouTube) */
+            border-radius: 0.5rem;  /* Přidáme zaoblené rohy, aby ladil s designem (odpovídá .rounded-lg) */
+        }
+    </style>
+    {{-- ======================================================== --}}
+    {{-- ================ KONEC PŘIDANÉHO KÓDU ==================== --}}
+    {{-- ======================================================== --}}
+
+@endsection
