@@ -11,20 +11,20 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layouts._navbar', function ($view) {
-            $frontendItems = NavbarItem::where('is_admin_item', false)
+            $leftItems = NavbarItem::where('align', 'left')
                 ->whereNull('parent_id')
                 ->orderBy('order')
                 ->get();
 
-            $adminItems = NavbarItem::where('is_admin_item', true)
-                ->where('requires_auth', true)
+            // Načteme VŠECHNY pravé položky, o zobrazení se postará šablona
+            $rightItems = NavbarItem::where('align', 'right')
                 ->whereNull('parent_id')
                 ->orderBy('order')
                 ->get();
 
             $view->with([
-                'frontendNavItems' => $frontendItems,
-                'adminNavItems' => $adminItems
+                'leftNavItems' => $leftItems,
+                'rightNavItems' => $rightItems
             ]);
         });
     }

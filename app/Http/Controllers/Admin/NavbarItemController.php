@@ -25,14 +25,16 @@ class NavbarItemController extends Controller
             'title' => 'required|string|max:255',
             'route' => 'required|string|max:255',
             'order' => 'required|integer',
+            'align' => 'required|in:left,right',
         ]);
 
         NavbarItem::create([
             'title' => $validated['title'],
             'route' => $validated['route'],
             'order' => $validated['order'],
-            'is_admin_item' => $request->has('is_admin_item'),
-            'requires_auth' => $request->has('is_admin_item'),
+            'align' => $validated['align'],
+            'requires_auth' => $request->has('requires_auth'),
+            'is_admin_item' => $request->has('requires_auth'), // Logiku pro admin položky navážeme na 'requires_auth'
         ]);
 
         return redirect()->route('admin.navbar-items.index')->with('success', 'Položka menu byla úspěšně vytvořena.');
@@ -49,14 +51,16 @@ class NavbarItemController extends Controller
             'title' => 'required|string|max:255',
             'route' => 'required|string|max:255',
             'order' => 'required|integer',
+            'align' => 'required|in:left,right',
         ]);
 
         $navbarItem->update([
             'title' => $validated['title'],
             'route' => $validated['route'],
             'order' => $validated['order'],
-            'is_admin_item' => $request->has('is_admin_item'),
-            'requires_auth' => $request->has('is_admin_item'),
+            'align' => $validated['align'],
+            'requires_auth' => $request->has('requires_auth'),
+            'is_admin_item' => $request->has('requires_auth'),
         ]);
 
         return redirect()->route('admin.navbar-items.index')->with('success', 'Položka menu byla úspěšně upravena.');

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator; // <--- PŘIDAT TENTO ŘÁDEK
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useTailwind(); // <--- UJISTIT SE, ŽE TENTO ŘÁDEK ZDE JE
     }
 }
