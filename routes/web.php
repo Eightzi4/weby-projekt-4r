@@ -1,27 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\Admin\NavbarItemController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 
-// Routy pro veřejné stránky
-Route::get('/', [PageController::class, 'home'])->name('home');
 
-Route::get('/clanek/{article}', [PageController::class, 'show'])->name('articles.show');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/sezony', [PageController::class, 'seasons'])->name('seasons.index');
-Route::get('/sezony/{season}', [PageController::class, 'seasonMatches'])->name('seasons.show');
+Route::get('/clanky/{article}', [ArticleController::class, 'show'])->name('articles.show');
 
-Route::get('/zapas/{game}', [PageController::class, 'gameDetails'])->name('games.show');
+Route::get('/sezony', [SeasonController::class, 'index'])->name('seasons.index');
+Route::get('/sezony/{season}', [SeasonController::class, 'show'])->name('seasons.show');
 
-Route::get('/tymy', [PageController::class, 'teams'])->name('teams.index');
+Route::get('/zapas/{game}', [GameController::class, 'show'])->name('games.show');
+
+Route::get('/tymy', [TeamController::class, 'index'])->name('teams.index');
+
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('articles', AdminArticleController::class);
+    Route::resource('navbar-items', NavbarItemController::class);
+});
+
+Auth::routes();

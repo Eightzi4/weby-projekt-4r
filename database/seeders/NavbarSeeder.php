@@ -8,35 +8,43 @@ use App\Models\NavbarItem;
 
 class NavbarSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Frontend položky
-        NavbarItem::firstOrCreate(['route' => 'home'], [
-            'title' => 'Home',
+        NavbarItem::truncate();
+
+        NavbarItem::create([
+            'route' => 'home',
+            'title' => 'Domů',
             'order' => 1,
             'is_admin_item' => false
         ]);
 
-        NavbarItem::firstOrCreate(['route' => 'seasons.index'], [
+        NavbarItem::create([
+            'route' => 'seasons.index',
             'title' => 'Sezóny',
             'order' => 2,
             'is_admin_item' => false
         ]);
 
-        NavbarItem::firstOrCreate(['route' => 'teams.index'], [
+        NavbarItem::create([
+            'route' => 'teams.index',
             'title' => 'Týmy',
             'order' => 3,
             'is_admin_item' => false
         ]);
 
-        // Admin položky
-        // Prozatím jen jedna, další můžete přidat později
-        NavbarItem::firstOrCreate(['route' => 'home'], [ // Dočasně směřuje na home
+        NavbarItem::create([
+            'route' => 'admin.articles.index',
             'title' => 'Správa článků',
             'order' => 1,
+            'is_admin_item' => true,
+            'requires_auth' => true
+        ]);
+
+        NavbarItem::create([
+            'route' => 'admin.navbar-items.index',
+            'title' => 'Správa menu',
+            'order' => 2,
             'is_admin_item' => true,
             'requires_auth' => true
         ]);

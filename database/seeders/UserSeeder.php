@@ -14,14 +14,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Vytvoří uživatele pouze pokud ještě neexistuje uživatel s tímto e-mailem.
+        // Vytvoří uživatele POUZE pokud ještě neexistuje uživatel s tímto e-mailem.
         User::firstOrCreate(
             [
                 'email' => 'admin@example.com'
             ],
             [
                 'name' => 'Admin',
-                'password' => 'password', // Heslo bude automaticky zahashováno díky nastavení v modelu User
+                'password' => 'password', // Heslo se automaticky zahashuje díky nastavení v modelu User
             ]
         );
     }

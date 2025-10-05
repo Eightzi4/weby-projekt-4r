@@ -28,7 +28,7 @@
 <body class="bg-gray-100 font-sans text-gray-900 antialiased">
     <div id="app">
 
-        @include('layouts.partials.navbar')
+        @include('layouts._navbar')
 
         <main class="py-8">
             <div class="container mx-auto px-4">
