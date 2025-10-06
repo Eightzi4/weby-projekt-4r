@@ -4,15 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// Ujistěte se, že název třídy odpovídá
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        // Ujistěte se, že název tabulky je správný
         Schema::create('navbar_items', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -28,9 +23,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('navbar_items');

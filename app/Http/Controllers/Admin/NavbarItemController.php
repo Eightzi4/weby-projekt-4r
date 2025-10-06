@@ -34,7 +34,7 @@ class NavbarItemController extends Controller
             'order' => $validated['order'],
             'align' => $validated['align'],
             'requires_auth' => $request->has('requires_auth'),
-            'is_admin_item' => $request->has('requires_auth'), // Logiku pro admin položky navážeme na 'requires_auth'
+            'is_admin_item' => $request->has('requires_auth'),
         ]);
 
         return redirect()->route('admin.navbar-items.index')->with('success', 'Položka menu byla úspěšně vytvořena.');

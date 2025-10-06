@@ -16,7 +16,6 @@ class ViewServiceProvider extends ServiceProvider
                 ->orderBy('order')
                 ->get();
 
-            // Načteme VŠECHNY pravé položky, o zobrazení se postará šablona
             $rightItems = NavbarItem::where('align', 'right')
                 ->whereNull('parent_id')
                 ->orderBy('order')
